@@ -30,28 +30,30 @@ public class ReleaseNotificationHandler {
     }
 
     public void CreateNotification(ReleaseGame releaseGame, String newVersion) {
-        notificationParameters = GetAllNotificationParameters(releaseGame);
-        for (Map.Entry<TextChannel, Role> entry : notificationParameters.entrySet()) {
-            TextChannel notificationChannel = entry.getKey();
-            Role notificationRole = entry.getValue();
-            notificationChannel.sendMessage(notificationRole.getAsMention())
-                               .addEmbeds(NewGameReleaseEmbed(releaseGame, newVersion))
-                               .addActionRow(Button.link(releaseGame.getRelease_url(), "Github - " + releaseGame.getName()))
-                               .queue();
+        for (Guild guild : jda.getGuilds()) {
+            CreateGuildNotification(guild, releaseGame, newVersion);
         }
         releaseGame.setVersion(newVersion);
         JsonConverter.SetNewGameVersion(releaseGame);
     }
 
-    private List<TextChannel> GetAllNotificationChannels() {
-        List<TextChannel> channels = new ArrayList<>();
-        for (Guild guild : jda.getGuilds()) {
-            assert guild != null;
-            String notificationChannelId = JsonConverter.GetNotificationChannelFromGuild(guild.getId());
-            assert notificationChannelId != null;
-            channels.add(guild.getTextChannelById(notificationChannelId));
+    public void CreateGuildNotification(Guild guild, ReleaseGame releaseGame, String newVersion) {
+        String notificationChannelId = JsonConverter.GetNotificationChannelFromGuild(guild.getId());
+        TextChannel notificationChannel = guild.getTextChannelById(notificationChannelId);
+        Role notificationRole = GetNotificationRole(notificationChannel, releaseGame);
+        notificationChannel.sendMessage(notificationRole.getAsMention())
+                .addEmbeds(NewGameReleaseEmbed(releaseGame, newVersion))
+                .addActionRow(Button.link(releaseGame.getRelease_url(), "Github - " + releaseGame.getName()))
+                .queue();
+    }
+
+    private Role GetNotificationRole(TextChannel channel, ReleaseGame game) {
+        Guild guild = channel.getGuild();
+        String notificationRoleId = JsonConverter.ReadNotificationRoleFromGuildFile(guild.getId(), game);
+        if (notificationRoleId == null) {
+            notificationRoleId = guild.getPublicRole().getId();
         }
-        return channels;
+        return guild.getRoleById(notificationRoleId);
     }
 
     private Map<TextChannel, Role> GetAllNotificationParameters(ReleaseGame game) {

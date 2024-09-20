@@ -67,7 +67,7 @@ public class JReleasor {
         commandHandler.registerCommands();
 
         System.out.println(jda.getRestPing().complete());
-        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.4"));
+        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.5"));
 
         GithubReleaseHandler grH = new GithubReleaseHandler();
         grH.start();

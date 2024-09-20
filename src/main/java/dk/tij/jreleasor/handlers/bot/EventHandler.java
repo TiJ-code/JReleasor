@@ -1,6 +1,7 @@
 package dk.tij.jreleasor.handlers.bot;
 
 import dk.tij.jreleasor.JReleasor;
+import dk.tij.jreleasor.listeners.CreateReleaseAutoCompleteListener;
 import dk.tij.jreleasor.listeners.ReleaseSettingsListener;
 import dk.tij.jreleasor.listeners.ShutdownListener;
 import dk.tij.jreleasor.listeners.setup.SetupButtonListener;
@@ -20,6 +21,7 @@ public class EventHandler {
 
         jda.addEventListener(new ReleaseSettingsListener());
         jda.addEventListener(new SetupButtonListener());
+        jda.addEventListener(new CreateReleaseAutoCompleteListener());
     }
 
     public void registerEventListener(ListenerAdapter listener) {
