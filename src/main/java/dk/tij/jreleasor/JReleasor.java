@@ -35,7 +35,6 @@ public class JReleasor {
     private ReleaseNotificationHandler releaseNotificationHandler;
 
     private List<Thread> threads;
-    private List<ReleaseGame> releaseGames;
 
     public JReleasor() {
         instance = this;
@@ -43,7 +42,6 @@ public class JReleasor {
         threads = new ArrayList<>();
 
         Configuration.loadConfig();
-        releaseGames = JsonConverter.ReadGamesFromFile();
 
         jda = JDABuilder.createDefault(Configuration.TOKEN)
                 .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES)
@@ -69,7 +67,7 @@ public class JReleasor {
         commandHandler.registerCommands();
 
         System.out.println(jda.getRestPing().complete());
-        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.3"));
+        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.4"));
 
         GithubReleaseHandler grH = new GithubReleaseHandler();
         grH.start();
@@ -87,7 +85,7 @@ public class JReleasor {
     }
 
     public List<ReleaseGame> getReleaseGames() {
-        return releaseGames;
+        return JsonConverter.ReadGamesFromFile();
     }
 
     public void setRunning(boolean running) {

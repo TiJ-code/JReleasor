@@ -2,5 +2,10 @@
   "setup_channel": "1286047408094187602",
   "notification_channel": "1286047363546484931",
   "settings_message": "1286629739976462372",
-  "notificators": []
+  "notificators": [
+    {
+      "game": "Amtris",
+      "role": "1286596686231113760"
+    }
+  ]
 }

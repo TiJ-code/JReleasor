@@ -149,7 +149,7 @@ public class ReleaseSettingsHandler {
         JsonObject content = Objects.requireNonNull(JsonConverter.ReadFromGuildFile(guildId));
 
         JsonArray notificatorsArray = new JsonArray();
-        if (content.get("notificators") != null) {
+        if (!content.get("notificators").asArray().isEmpty()) {
             notificatorsArray = content.get("notificators").asArray();
             for (int i = 0; i < notificatorsArray.size(); i++) {
                 JsonObject arrayValueObject = notificatorsArray.get(i).asObject();

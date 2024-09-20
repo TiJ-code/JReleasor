@@ -15,10 +15,10 @@ import java.util.List;
 
 public class GithubReleaseHandler extends Thread {
 
-    private final List<ReleaseGame> releaseGames;
+    private final JReleasor jReleasor;
 
     public GithubReleaseHandler() {
-        releaseGames = JReleasor.instance.getReleaseGames();
+        this.jReleasor = JReleasor.instance;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class GithubReleaseHandler extends Thread {
         try {
             while (JReleasor.instance.isRunning()) {
                 OkHttpClient client = new OkHttpClient();
-                for (ReleaseGame game : releaseGames) {
+                for (ReleaseGame game : jReleasor.getReleaseGames()) {
                     Request request = new Request.Builder()
                             .url(game.getRelease_url())
                             .build();
@@ -50,7 +50,7 @@ public class GithubReleaseHandler extends Thread {
                         }
                     }
                 }
-                sleep(60 * 1000);
+                sleep(5 * 60 * 1000);
             }
         } catch (InterruptedException interruptedException) {
             System.err.println(interruptedException.getMessage());
