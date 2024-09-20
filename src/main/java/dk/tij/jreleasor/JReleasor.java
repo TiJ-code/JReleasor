@@ -5,7 +5,7 @@ import dk.tij.jreleasor.handlers.GithubReleaseHandler;
 import dk.tij.jreleasor.handlers.ReleaseNotificationHandler;
 import dk.tij.jreleasor.handlers.bot.CommandHandler;
 import dk.tij.jreleasor.handlers.bot.EventHandler;
-import dk.tij.jreleasor.handlers.ReleaseMessageHandler;
+import dk.tij.jreleasor.handlers.ReleaseSettingsHandler;
 import dk.tij.jreleasor.handlers.SetupHandler;
 import dk.tij.jreleasor.utils.JsonConverter;
 import dk.tij.jreleasor.utils.ReleaseGame;
@@ -31,7 +31,7 @@ public class JReleasor {
 
     private final EventHandler eventHandler;
     private SetupHandler setupHandler;
-    private ReleaseMessageHandler releaseMessageHandler;
+    private ReleaseSettingsHandler releaseMessageHandler;
     private ReleaseNotificationHandler releaseNotificationHandler;
 
     private List<Thread> threads;
@@ -69,7 +69,7 @@ public class JReleasor {
         commandHandler.registerCommands();
 
         System.out.println(jda.getRestPing().complete());
-        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.2"));
+        jda.getPresence().setActivity(Activity.customStatus("Running on v0.0.3"));
 
         GithubReleaseHandler grH = new GithubReleaseHandler();
         grH.start();
@@ -78,7 +78,7 @@ public class JReleasor {
 
     private void InstantiateHandlers() {
         setupHandler = new SetupHandler();
-        releaseMessageHandler = new ReleaseMessageHandler();
+        releaseMessageHandler = new ReleaseSettingsHandler();
         releaseNotificationHandler = new ReleaseNotificationHandler();
     }
 
@@ -98,7 +98,7 @@ public class JReleasor {
         return setupHandler;
     }
 
-    public ReleaseMessageHandler getReleaseMessageHandler() {
+    public ReleaseSettingsHandler getReleaseMessageHandler() {
         return releaseMessageHandler;
     }
 

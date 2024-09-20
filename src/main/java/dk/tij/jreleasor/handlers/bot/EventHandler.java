@@ -1,7 +1,7 @@
 package dk.tij.jreleasor.handlers.bot;
 
 import dk.tij.jreleasor.JReleasor;
-import dk.tij.jreleasor.listeners.ReleaseMessageListener;
+import dk.tij.jreleasor.listeners.ReleaseSettingsListener;
 import dk.tij.jreleasor.listeners.ShutdownListener;
 import dk.tij.jreleasor.listeners.setup.SetupButtonListener;
 import net.dv8tion.jda.api.JDA;
@@ -18,7 +18,7 @@ public class EventHandler {
     public void registerEventListeners() {
         jda.addEventListener(new ShutdownListener());
 
-        jda.addEventListener(new ReleaseMessageListener());
+        jda.addEventListener(new ReleaseSettingsListener());
         jda.addEventListener(new SetupButtonListener());
     }
 

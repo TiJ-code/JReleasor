@@ -16,12 +16,13 @@ import net.dv8tion.jda.api.interactions.components.selections.SelectOption;
 import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import org.hjson.JsonArray;
 import org.hjson.JsonObject;
+import org.hjson.JsonValue;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
-public class ReleaseMessageHandler {
+public class ReleaseSettingsHandler {
 
     private Message settingsMessage;
     private Message selectGameMessage;
@@ -41,7 +42,7 @@ public class ReleaseMessageHandler {
     private int selectedGameIndex = 0;
     private int selectedRoleIndex = 0;
 
-    public ReleaseMessageHandler() {
+    public ReleaseSettingsHandler() {
         this.jda = JReleasor.instance.getJda();
     }
 
@@ -120,10 +121,8 @@ public class ReleaseMessageHandler {
         JsonObject content = JsonConverter.ReadFromGuildFile(Objects.requireNonNull(guild).getId());
         if (content != null) {
             setupChannel = guild.getTextChannelById(content.get("setup_channel").asString());
-            System.out.println(setupChannel == null);
             setupChannel.retrieveMessageById(content.get("settings_message").asString()).queue(message -> {
                 settingsMessage = message;
-                System.out.println("true");
                 MentionRole();
             });
         }
@@ -151,8 +150,14 @@ public class ReleaseMessageHandler {
 
         JsonArray notificatorsArray = new JsonArray();
         if (content.get("notificators") != null) {
-            notificatorsArray = content.get("notificators").asArray()
-                    .add(selectGameObject);
+            notificatorsArray = content.get("notificators").asArray();
+            for (int i = 0; i < notificatorsArray.size(); i++) {
+                JsonObject arrayValueObject = notificatorsArray.get(i).asObject();
+                if (arrayValueObject.get("game").asString().equals(selectedGame.getName())) {
+                    notificatorsArray.set(i, selectGameObject);
+                    break;
+                }
+            }
         } else {
             notificatorsArray.add(selectGameObject);
         }
@@ -161,22 +166,16 @@ public class ReleaseMessageHandler {
         JsonConverter.WriteToGuildFile(guildId, content);
 
         settingsMessage.editMessageComponents(settingsButtons.asEnabled()).queue();
+
+        selectedGameIndex = selectedRoleIndex = 0;
     }
 
     public void setSelectGameMessage(Message selectGameMessage) {
         this.selectGameMessage = selectGameMessage;
     }
 
-    public Message getSelectGameMessage() {
-        return selectGameMessage;
-    }
-
     public void setSelectRoleMessage(Message selectRoleMessage) {
         this.selectRoleMessage = selectRoleMessage;
-    }
-
-    public Message getSelectRoleMessage() {
-        return selectRoleMessage;
     }
 
     public void setSettingsMessage(Message settingsMessage) {

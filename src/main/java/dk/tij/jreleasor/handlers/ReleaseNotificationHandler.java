@@ -60,7 +60,10 @@ public class ReleaseNotificationHandler {
             assert guild != null;
             String notificationChannelId = JsonConverter.GetNotificationChannelFromGuild(guild.getId());
             String notificationRoleId = JsonConverter.ReadNotificationRoleFromGuildFile(guild.getId(), game);
-            assert notificationChannelId != null && notificationRoleId != null;
+            if (notificationRoleId == null) {
+                notificationRoleId = guild.getPublicRole().getId();
+            }
+            assert notificationChannelId != null;
             TextChannel channel = guild.getTextChannelById(notificationChannelId);
             Role role = guild.getRoleById(notificationRoleId);
             parameters.put(channel, role);

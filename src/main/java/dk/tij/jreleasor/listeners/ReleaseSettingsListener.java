@@ -1,19 +1,19 @@
 package dk.tij.jreleasor.listeners;
 
 import dk.tij.jreleasor.JReleasor;
-import dk.tij.jreleasor.handlers.ReleaseMessageHandler;
+import dk.tij.jreleasor.handlers.ReleaseSettingsHandler;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class ReleaseMessageListener extends ListenerAdapter {
+public class ReleaseSettingsListener extends ListenerAdapter {
 
-    private final ReleaseMessageHandler releaseMessageHandler;
+    private final ReleaseSettingsHandler releaseMessageHandler;
 
-    private int selectedGameIndex;
-    private int selectedRoleIndex;
+    private int selectedGameIndex = 0;
+    private int selectedRoleIndex = 0;
 
-    public ReleaseMessageListener() {
+    public ReleaseSettingsListener() {
         this.releaseMessageHandler = JReleasor.instance.getReleaseMessageHandler();
     }
 
@@ -26,11 +26,12 @@ public class ReleaseMessageListener extends ListenerAdapter {
         if (buttonId.contains("mention-role")) {
             releaseMessageHandler.LoadUp(event);
         } else if (buttonId.contains("next")) {
-            releaseMessageHandler.Next();
             releaseMessageHandler.setSelectedGame(selectedGameIndex);
+            releaseMessageHandler.Next();
         } else if (buttonId.contains("done")) {
-            releaseMessageHandler.Done();
             releaseMessageHandler.setSelectedRole(selectedRoleIndex);
+            releaseMessageHandler.Done();
+            selectedGameIndex = selectedRoleIndex = 0;
         }
 
         event.deferEdit().queue();
