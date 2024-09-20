@@ -2,6 +2,7 @@ package dk.tij.jreleasor.handlers;
 
 import dk.tij.jreleasor.JReleasor;
 import dk.tij.jreleasor.listeners.setup.SetupMessageListener;
+import dk.tij.jreleasor.utils.JsonConverter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -10,7 +11,6 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.hjson.JsonObject;
 
 import java.awt.*;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SetupHandler {

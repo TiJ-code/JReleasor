@@ -1,4 +1,4 @@
-package dk.tij.jreleasor.handlers;
+package dk.tij.jreleasor.handlers.bot;
 
 import dk.tij.jreleasor.commands.SetupCommand;
 import dk.tij.jreleasor.commands.handler.SlashCommand;

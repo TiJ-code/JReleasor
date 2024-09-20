@@ -1,6 +1,7 @@
 package dk.tij.jreleasor.handlers;
 
 import dk.tij.jreleasor.JReleasor;
+import dk.tij.jreleasor.utils.JsonConverter;
 import dk.tij.jreleasor.utils.ReleaseGame;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -11,7 +12,6 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenu;
 import net.dv8tion.jda.api.interactions.components.selections.SelectOption;
 import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import org.hjson.JsonArray;
@@ -72,7 +72,7 @@ public class ReleaseMessageHandler {
                 .setDescription("Select the game whose mention role you want to change.")
                 .setColor(new Color(222, 0, 0));
 
-        releasedGames = JsonConverter.ReadGamesFromFile();
+        releasedGames = JReleasor.instance.getReleaseGames();
 
         StringSelectMenu.Builder menu = StringSelectMenu.create("settings-games");
         for (int i = 0; i < releasedGames.size(); i++) {

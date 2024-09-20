@@ -1,4 +1,4 @@
-package dk.tij.jreleasor.handlers;
+package dk.tij.jreleasor.handlers.bot;
 
 import dk.tij.jreleasor.JReleasor;
 import dk.tij.jreleasor.listeners.ReleaseMessageListener;

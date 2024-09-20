@@ -2,7 +2,9 @@
   "games": [
     {
       "name": "Amtris",
-      "release_url": "https://github.com/TiJ-code/Amtris/releases/latest"
+      "release_url": "https://github.com/TiJ-code/Amtris/releases/latest",
+      "thumbnail_url": "https://raw.githubusercontent.com/TiJ-code/Amtris/refs/heads/main/Thumbnail.png",
+      "version": "1.219"
     }
   ]
 }
