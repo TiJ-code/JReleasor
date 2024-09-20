@@ -1,4 +1,5 @@
 config.json
+*.jar
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
